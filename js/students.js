@@ -11,20 +11,13 @@ document.addEventListener('DOMContentLoaded', function () {
         $("#myModal").modal();
     });
 
-
     document.getElementById('submitBtn').addEventListener('click', function (event) {
 
         event.preventDefault();
 
-        if (document.querySelector('#surname').value === ''
-            || document.querySelector('#cname').value === ''
-            || document.querySelector('#year').value === ''
-            || document.querySelector('#mail').value === '') {
-
+        if (!validator()) {
             return;
         }
-
-
         if (editedRow) {
 
             editedRow.querySelectorAll('td')[0].innerText = document.querySelector('#surname').value;
@@ -49,13 +42,10 @@ document.addEventListener('DOMContentLoaded', function () {
             cName.innerText = document.querySelector('#cname').value;
             yearInSchool.innerText = document.querySelector('#year').value;
             mail.innerText = document.querySelector('#mail').value;
-
-
         }
 
         $("#myModal").modal('hide');
     });
-
 
     document.getElementById('table').addEventListener('click', function (event) {
 
@@ -79,12 +69,49 @@ document.addEventListener('DOMContentLoaded', function () {
 
             $("#myModal").modal();
 
-
         }
     })
-
-
 });
+
+
+
+function validator() {
+
+    let nameRegex = /^[a-zA-Z ]{2,30}$/;
+    let mailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+) *@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    let inputSurName = document.querySelector('#surname');
+    let inputCName = document.querySelector('#cname');
+    let inputYear = document.querySelector('#year');
+    let inputMail = document.querySelector('#mail');
+    let isAcceptable = true;
+
+    inputSurName.classList.remove('is-invalid');
+    inputCName.classList.remove('is-invalid');
+    inputYear.classList.remove('is-invalid');
+    inputMail.classList.remove('is-invalid');
+
+    if (inputSurName.value === '' || !nameRegex.test(inputSurName.value)) {
+        inputSurName.classList.add('is-invalid');
+        isAcceptable = false;
+    }
+    if (inputCName.value === '' || !nameRegex.test(inputCName.value)) {
+        inputCName.classList.add('is-invalid');
+        isAcceptable = false;
+    }
+    if (inputYear.value === '') {
+        inputYear.classList.add('is-invalid');
+        isAcceptable = false;
+    }
+    if (inputMail.value === '' || !mailRegex.test(inputMail.value)) {
+        inputMail.classList.add('is-invalid');
+        isAcceptable = false;
+    }
+
+
+    return isAcceptable;
+
+
+}
 
 //Az elk**t idő emlékére
 
