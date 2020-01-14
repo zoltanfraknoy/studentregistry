@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         event.preventDefault();
 
-        if (!validator()) {
+        if (!validateInput()) {
             return;
         }
         if (editedRow) {
@@ -73,9 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 });
 
-
-
-function validator() {
+function validateInput() {
 
     let nameRegex = /^[a-zA-Z ]{2,30}$/;
     let mailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+) *@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
@@ -85,6 +83,7 @@ function validator() {
     let inputMail = document.querySelector('#mail');
     let isAcceptable = true;
 
+    //kicsapni változóba oszt baszatni máshun he
     inputSurName.classList.remove('is-invalid');
     inputCName.classList.remove('is-invalid');
     inputYear.classList.remove('is-invalid');
