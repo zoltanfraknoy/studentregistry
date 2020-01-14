@@ -1,39 +1,61 @@
 document.addEventListener('DOMContentLoaded', function () {
+    let editedRow = null;
     document.getElementById('addStudent').addEventListener('click', function (event) {
+
         document.querySelector('#surname').value = '';
         document.querySelector('#cname').value = '';
         document.querySelector('#year').value = '';
         document.querySelector('#mail').value = '';
+        document.querySelector('h4').innerText = 'Új diák';
+        editedRow = null;
         $("#myModal").modal();
     });
 
+
     document.getElementById('submitBtn').addEventListener('click', function (event) {
+
+        event.preventDefault();
 
         if (document.querySelector('#surname').value === ''
             || document.querySelector('#cname').value === ''
             || document.querySelector('#year').value === ''
             || document.querySelector('#mail').value === '') {
 
-            event.preventDefault();
+            return;
         }
 
-        let newTr = document.querySelectorAll('tr')[1].cloneNode(true);
-        //document.createElement('tr');
-        let table = document.querySelector('tbody');
-        let newRow = table.appendChild(newTr);
 
-        let surName = document.querySelectorAll('tr')[document.querySelectorAll('tr').length - 1].cells[0];
-        let cName = document.querySelectorAll('tr')[document.querySelectorAll('tr').length - 1].cells[1];
-        let yearInSchool = document.querySelectorAll('tr')[document.querySelectorAll('tr').length - 1].cells[2];
-        let mail = document.querySelectorAll('tr')[document.querySelectorAll('tr').length - 1].cells[3];
+        if (editedRow) {
 
-        surName.innerText = document.querySelector('#surname').value;
-        cName.innerText = document.querySelector('#cname').value;
-        yearInSchool.innerText = document.querySelector('#year').value;
-        mail.innerText = document.querySelector('#mail').value;
+            editedRow.querySelectorAll('td')[0].innerText = document.querySelector('#surname').value;
+            editedRow.querySelectorAll('td')[1].innerText = document.querySelector('#cname').value;
+            editedRow.querySelectorAll('td')[2].innerText = document.querySelector('#year').value;
+            editedRow.querySelectorAll('td')[3].innerText = document.querySelector('#mail').value;
+
+
+        } else {
+
+            let newTr = document.querySelector('tr.prototype').cloneNode(true);
+            newTr.classList.remove('prototype', 'd-none');
+            let table = document.querySelector('tbody');
+            let newRow = table.appendChild(newTr);
+
+            let surName = document.querySelectorAll('tr')[document.querySelectorAll('tr').length - 1].cells[0];
+            let cName = document.querySelectorAll('tr')[document.querySelectorAll('tr').length - 1].cells[1];
+            let yearInSchool = document.querySelectorAll('tr')[document.querySelectorAll('tr').length - 1].cells[2];
+            let mail = document.querySelectorAll('tr')[document.querySelectorAll('tr').length - 1].cells[3];
+
+            surName.innerText = document.querySelector('#surname').value;
+            cName.innerText = document.querySelector('#cname').value;
+            yearInSchool.innerText = document.querySelector('#year').value;
+            mail.innerText = document.querySelector('#mail').value;
+
+
+        }
 
         $("#myModal").modal('hide');
     });
+
 
     document.getElementById('table').addEventListener('click', function (event) {
 
@@ -43,6 +65,8 @@ document.addEventListener('DOMContentLoaded', function () {
         } else if (event.target.classList.contains('edit')) {
 
             document.querySelector('h4').innerText = 'Szerkesztés';
+
+            editedRow = event.target.closest('tr');
 
             document.querySelector('#surname').value = event.target.closest('tr')
                 .querySelectorAll('td')[0].innerText;
@@ -72,12 +96,11 @@ document.addEventListener('DOMContentLoaded', function () {
  let buttons = newRow.insertCell(4);
  buttons.className = 'text-right';*/
 
-/*let delButton = document.createElement('input');
+/*let delButton = document.createElement('button');
 delButton.type = "button";
 delButton.className = "btn btn-info btn-sm delete";
 delButton.id = 'delete';
-delButton.appendChild(buttonSpanDel);
-buttonSpanDel.innerHTML = 'Törlés';*/
+delButton.innerHTML = 'Törlés';*/
 
 // let editButton = document.querySelector('.edit').cloneNode(true);
 // let delButton = document.querySelector('.delete').cloneNode(true);
